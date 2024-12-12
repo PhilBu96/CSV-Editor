@@ -24,6 +24,15 @@ namespace CSV_Viewer
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 progressBar.Visible = true;
+                progressBar.Value = 0;
+
+                // Fortschritt schrittweise erhöhen
+                for (int i = 0; i <= 100; i++)
+                {
+                    progressBar.Value = i;
+                    await Task.Delay(10); // Zeitverzögerung pro Schritt (ca. 1 Sekunde insgesamt)
+                }
+
                 await Task.Run(() => LoadCsv(openFileDialog.FileName));
                 progressBar.Visible = false;
             }
@@ -37,13 +46,16 @@ namespace CSV_Viewer
                     var lines = File.ReadAllLines(filePath);
                     if (lines.Length > 0)
                     {
+                        // Kopfzeilen einlesen
                         var headers = lines[0].Split(',');
                         dataGridView.Columns.Clear();
+
                         foreach (var header in headers)
                         {
                             dataGridView.Columns.Add(header, header);
                         }
 
+                        // Zeilen einlesen
                         for (int i = 1; i < lines.Length; i++)
                         {
                             var data = lines[i].Split(',');
@@ -153,7 +165,16 @@ namespace CSV_Viewer
 
         private void UeberToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show(
+            "CSV-Editor by Philipp Buthmann\n\n" +
+            "Version: 1.0\n" +
+            "Entwickler: Philipp Buthmann\n" +
+            "Kontakt: p.buthmann@weissenhaeuserstrand.de\n" +
+            "\nDieses Programm wurde entwickelt, um CSV-Dateien einfach und intuitiv zu bearbeiten.",
+            "Über",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information
+            );
         }
     }
 }

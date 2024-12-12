@@ -35,8 +35,8 @@
             cSVSpeichernToolStripMenuItem = new ToolStripMenuItem();
             programmBeendenToolStripMenuItem = new ToolStripMenuItem();
             InfoToolStripMenuItem = new ToolStripMenuItem();
-            progressBar = new ProgressBar();
             überToolStripMenuItem = new ToolStripMenuItem();
+            progressBar = new ProgressBar();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -96,6 +96,13 @@
             InfoToolStripMenuItem.Text = "Info";
             InfoToolStripMenuItem.Click += InfoToolStripMenuItem_Click;
             // 
+            // überToolStripMenuItem
+            // 
+            überToolStripMenuItem.Name = "überToolStripMenuItem";
+            überToolStripMenuItem.Size = new Size(180, 22);
+            überToolStripMenuItem.Text = "Über...";
+            überToolStripMenuItem.Click += UeberToolStripMenuItem_Click;
+            // 
             // progressBar
             // 
             progressBar.Location = new Point(12, 741);
@@ -103,13 +110,6 @@
             progressBar.Size = new Size(1340, 23);
             progressBar.TabIndex = 3;
             progressBar.Visible = false;
-            // 
-            // überToolStripMenuItem
-            // 
-            überToolStripMenuItem.Name = "überToolStripMenuItem";
-            überToolStripMenuItem.Size = new Size(180, 22);
-            überToolStripMenuItem.Text = "Über...";
-            überToolStripMenuItem.Click += UeberToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -121,7 +121,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
-            Text = "CSV by Philipp Buthmann";
+            Text = "CSV-Editor by Philipp Buthmann";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
