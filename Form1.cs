@@ -164,7 +164,7 @@ namespace CSV_Viewer
                     "Es gibt ungespeicherte Änderungen. Möchten Sie das Programm wirklich beenden, ohne zu speichern?",
                     "Ungespeicherte Änderungen",
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warningö
+                    MessageBoxIcon.Warning
                 );
 
                 return result == DialogResult.Yes;
