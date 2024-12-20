@@ -99,12 +99,13 @@
             // überToolStripMenuItem
             // 
             überToolStripMenuItem.Name = "überToolStripMenuItem";
-            überToolStripMenuItem.Size = new Size(180, 22);
+            überToolStripMenuItem.Size = new Size(108, 22);
             überToolStripMenuItem.Text = "Über...";
             überToolStripMenuItem.Click += UeberToolStripMenuItem_Click;
             // 
             // progressBar
             // 
+            progressBar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             progressBar.Location = new Point(12, 741);
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(1340, 23);
@@ -119,11 +120,13 @@
             Controls.Add(progressBar);
             Controls.Add(dataGridView);
             Controls.Add(menuStrip1);
+            KeyPreview = true;
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "CSV-Editor by Philipp Buthmann";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
+            KeyDown += Form1_KeyDown;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

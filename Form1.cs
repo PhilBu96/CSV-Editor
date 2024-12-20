@@ -65,25 +65,42 @@ namespace CSV_Viewer
                         }
                     }));
 
-                    // Daten einfügen und Fortschritt anzeigen
+                    // Daten in Blöcken hinzufügen, um UI-Updates zu reduzieren
+                    int batchSize = 100; // Anzahl der Zeilen pro UI-Update
+                    List<string[]> batch = new List<string[]>();
+
                     for (int i = 1; i < lines.Length; i++)
                     {
                         var data = lines[i].Split(',');
+                        batch.Add(data);
 
-                        Invoke(new Action(() =>
+                        // Fortschrittsbalken und UI-Update alle "batchSize" Zeilen
+                        if (i % batchSize == 0 || i == lines.Length - 1)
                         {
-                            dataGridView.Rows.Add(data);
-                            progressBar.Value = i;
-                        }));
+                            Invoke(new Action(() =>
+                            {
+                                foreach (var row in batch)
+                                {
+                                    dataGridView.Rows.Add(row);
+                                }
 
-                        await Task.Delay(5); // Zeitverzögerung für sichtbare Fortschrittsanzeige
+                                progressBar.Value = i; // Fortschritt aktualisieren
+                            }));
+
+                            batch.Clear(); // Batch leeren
+                        }
                     }
                 }
 
-                progressBar.Visible = false;
+                // Nach Abschluss des Ladevorgangs und vor dem Verstecken der ProgressBar
+                progressBar.Value = progressBar.Maximum; // Fortschritt auf 100% setzen
+                await Task.Delay(500); // 500 Millisekunden warten, damit die ProgressBar sichtbar bleibt
+                progressBar.Visible = false; // Fortschrittsbalken ausblenden
+
                 lastUsedPath = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
+
 
         private void SaveCsv(string filePath)
         {
@@ -196,6 +213,17 @@ namespace CSV_Viewer
             //    MessageBoxButtons.OK,
             //    MessageBoxIcon.Information
             //);
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                // Strg + S wurde gedrückt
+                Console.WriteLine("Strg + S wurde gedrückt..."); //Debugging-Ausgabe
+                CSVSpeichernToolStripMenuItem_Click(this, EventArgs.Empty);
+                e.Handled = true; // Signalisiert, dass das Ereignis verarbeitet wurde
+            }
         }
     }
 }
