@@ -225,5 +225,89 @@ namespace CSV_Viewer
                 e.Handled = true; // Signalisiert, dass das Ereignis verarbeitet wurde
             }
         }
+
+        private void zeileEinfuegenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Prüfen, ob eine Zelle ausgewählt ist
+                if (dataGridView.SelectedCells.Count > 0)
+                {
+                    // Überprüfen, ob nur eine Zelle ausgewählt ist
+                    int rowIndex = dataGridView.SelectedCells[0].RowIndex;
+
+                    // Neue Zeile unter der ausgewählten Zeile einfügen
+                    DataGridViewRow newRow = new DataGridViewRow();
+                    dataGridView.Rows.Insert(rowIndex + 1, newRow);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Keine Zelle ausgewählt.");
+                }
+            }
+            catch (Exception ex)
+            {
+                /*MessageBox.Show($"Fehler: {ex.Message}\nEs wird eine neue Zeile am Ende der Tabelle hinzugefügt.",
+                                "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Warning);*/
+
+                // Fallback: Neue Zeile am Ende der Tabelle einfügen
+                DataGridViewRow newRow = new DataGridViewRow();
+                dataGridView.Rows.Add(newRow);
+            }
+        }
+
+        private void cSVErstellenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Daten in DataGridView zurücksetzen
+                dataGridView.Rows.Clear();
+                dataGridView.Columns.Clear();
+
+                // Standardspalten hinzufügen (optional, z. B. "Spalte1", "Spalte2")
+                dataGridView.Columns.Add("Spalte1", "Spalte 1");
+                dataGridView.Columns.Add("Spalte2", "Spalte 2");
+
+                // Optional: Eine erste leere Zeile hinzufügen
+                dataGridView.Rows.Add();
+
+                /*MessageBox.Show("Neue CSV-Datei wurde erstellt und geladen.",
+                                "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Erstellen der neuen CSV-Datei: {ex.Message}",
+                                "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridView_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                // Index der angeklickten Spalte
+                int columnIndex = e.ColumnIndex;
+
+                // Aktuellen Spaltennamen abrufen
+                string currentName = dataGridView.Columns[columnIndex].HeaderText;
+
+                // Eingabefeld für neuen Namen anzeigen
+                string newName = Microsoft.VisualBasic.Interaction.InputBox(
+                    $"Geben Sie einen neuen Namen für die Spalte '{currentName}' ein:",
+                    "Spaltennamen bearbeiten",
+                    currentName);
+
+                // Überprüfen, ob ein neuer Name eingegeben wurde
+                if (!string.IsNullOrEmpty(newName))
+                {
+                    dataGridView.Columns[columnIndex].HeaderText = newName;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Bearbeiten des Spaltennamens: {ex.Message}",
+                                "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

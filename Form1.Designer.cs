@@ -31,9 +31,12 @@
             dataGridView = new DataGridView();
             menuStrip1 = new MenuStrip();
             dateiToolStripMenuItem = new ToolStripMenuItem();
+            cSVErstellenToolStripMenuItem = new ToolStripMenuItem();
             menuLoadCsv = new ToolStripMenuItem();
             cSVSpeichernToolStripMenuItem = new ToolStripMenuItem();
             programmBeendenToolStripMenuItem = new ToolStripMenuItem();
+            tabelleToolStripMenuItem = new ToolStripMenuItem();
+            zeileEinfuegenToolStripMenuItem = new ToolStripMenuItem();
             InfoToolStripMenuItem = new ToolStripMenuItem();
             überToolStripMenuItem = new ToolStripMenuItem();
             progressBar = new ProgressBar();
@@ -43,6 +46,8 @@
             // 
             // dataGridView
             // 
+            dataGridView.AllowDrop = true;
+            dataGridView.AllowUserToOrderColumns = true;
             dataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.Location = new Point(12, 27);
@@ -50,10 +55,11 @@
             dataGridView.Size = new Size(1340, 708);
             dataGridView.TabIndex = 1;
             dataGridView.CellValueChanged += DataGridView_CellValueChanged;
+            dataGridView.ColumnHeaderMouseDoubleClick += dataGridView_ColumnHeaderMouseDoubleClick;
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { dateiToolStripMenuItem, InfoToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { dateiToolStripMenuItem, tabelleToolStripMenuItem, InfoToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1364, 24);
@@ -62,10 +68,17 @@
             // 
             // dateiToolStripMenuItem
             // 
-            dateiToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { menuLoadCsv, cSVSpeichernToolStripMenuItem, programmBeendenToolStripMenuItem });
+            dateiToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cSVErstellenToolStripMenuItem, menuLoadCsv, cSVSpeichernToolStripMenuItem, programmBeendenToolStripMenuItem });
             dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
             dateiToolStripMenuItem.Size = new Size(46, 20);
             dateiToolStripMenuItem.Text = "Datei";
+            // 
+            // cSVErstellenToolStripMenuItem
+            // 
+            cSVErstellenToolStripMenuItem.Name = "cSVErstellenToolStripMenuItem";
+            cSVErstellenToolStripMenuItem.Size = new Size(180, 22);
+            cSVErstellenToolStripMenuItem.Text = "CSV erstellen...";
+            cSVErstellenToolStripMenuItem.Click += cSVErstellenToolStripMenuItem_Click;
             // 
             // menuLoadCsv
             // 
@@ -87,6 +100,20 @@
             programmBeendenToolStripMenuItem.Size = new Size(180, 22);
             programmBeendenToolStripMenuItem.Text = "Programm beenden";
             programmBeendenToolStripMenuItem.Click += ProgrammBeendenToolStripMenuItem_Click;
+            // 
+            // tabelleToolStripMenuItem
+            // 
+            tabelleToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { zeileEinfuegenToolStripMenuItem });
+            tabelleToolStripMenuItem.Name = "tabelleToolStripMenuItem";
+            tabelleToolStripMenuItem.Size = new Size(55, 20);
+            tabelleToolStripMenuItem.Text = "Tabelle";
+            // 
+            // zeileEinfuegenToolStripMenuItem
+            // 
+            zeileEinfuegenToolStripMenuItem.Name = "zeileEinfuegenToolStripMenuItem";
+            zeileEinfuegenToolStripMenuItem.Size = new Size(149, 22);
+            zeileEinfuegenToolStripMenuItem.Text = "Zeile einfügen";
+            zeileEinfuegenToolStripMenuItem.Click += zeileEinfuegenToolStripMenuItem_Click;
             // 
             // InfoToolStripMenuItem
             // 
@@ -144,5 +171,8 @@
         private ToolStripMenuItem InfoToolStripMenuItem;
         private ProgressBar progressBar;
         private ToolStripMenuItem überToolStripMenuItem;
+        private ToolStripMenuItem tabelleToolStripMenuItem;
+        private ToolStripMenuItem zeileEinfuegenToolStripMenuItem;
+        private ToolStripMenuItem cSVErstellenToolStripMenuItem;
     }
 }
