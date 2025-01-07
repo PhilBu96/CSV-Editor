@@ -10,6 +10,7 @@ namespace CSV_Viewer
     public partial class Form1 : Form
     {
         private bool hasUnsavedChanges = false;
+        private bool isClosingConfirmed = false;
         private string lastUsedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         public Form1()
@@ -156,6 +157,7 @@ namespace CSV_Viewer
         {
             if (BeendenPrüfenUndSchließen())
             {
+                isClosingConfirmed = true; // Bestätigen, dass das Beenden zugelassen ist
                 Application.Exit();
             }
         }
@@ -167,9 +169,16 @@ namespace CSV_Viewer
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!BeendenPrüfenUndSchließen())
+            if (!isClosingConfirmed)
             {
-                e.Cancel = true;
+                if (!BeendenPrüfenUndSchließen())
+                {
+                    e.Cancel = true; // Beenden abbrechen
+                }
+                else
+                {
+                    isClosingConfirmed = true; // Bestätigen, dass das Beenden zugelassen ist
+                }
             }
         }
 
@@ -184,10 +193,16 @@ namespace CSV_Viewer
                     MessageBoxIcon.Warning
                 );
 
-                return result == DialogResult.Yes;
+                if (result == DialogResult.Yes)
+                {
+                    isClosingConfirmed = true; // Schließen bestätigen
+                    return true; // Programm kann beendet werden
+                }
+
+                return false; // Benutzer hat "Nein" gewählt, nicht beenden
             }
 
-            return true;
+            return true; // Keine Änderungen vorhanden, beenden erlaubt
         }
 
         private void UeberToolStripMenuItem_Click(object sender, EventArgs e)
